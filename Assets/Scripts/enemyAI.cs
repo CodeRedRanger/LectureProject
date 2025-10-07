@@ -99,9 +99,9 @@ bool canSeePlayer()
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             //to see what enemy raycast hits
-            Debug.Log(hit.collider.name);
+            Debug.Log("Enemy is hitting " + hit.collider.name);
 
-            if (angleToPlayer < FOV && hit.collider.CompareTag("Player"))
+            if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
             {
 
                 agent.SetDestination(gameManager.instance.player.transform.position);

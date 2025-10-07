@@ -1164,7 +1164,7 @@ GameObject:
   - component: {fileID: 848532025}
   - component: {fileID: 848532024}
   - component: {fileID: 848532030}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Fake enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1278,11 +1278,11 @@ MonoBehaviour:
   model: {fileID: 848532025}
   agent: {fileID: 848532029}
   HP: 3
-  faceTargetSpeed: 4
+  faceTargetSpeed: 8
   shootPos: {fileID: 848532027}
   bullet: {fileID: 3659165323124891262, guid: 01e2cd85fb7cd634ca73bf6585929cbf, type: 3}
   shootRate: 1
-  FOV: 0
+  FOV: 90
   headPos: {fileID: 848532027}
 --- !u!195 &848532029
 NavMeshAgent:
