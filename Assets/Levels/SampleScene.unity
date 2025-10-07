@@ -1284,6 +1284,8 @@ MonoBehaviour:
   shootRate: 1
   FOV: 90
   headPos: {fileID: 848532027}
+  roamDist: 0
+  roamPauseTime: 0
 --- !u!195 &848532029
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2402,6 +2404,8 @@ MonoBehaviour:
   shootRate: 0
   FOV: 0
   headPos: {fileID: 0}
+  roamDist: 0
+  roamPauseTime: 0
 --- !u!1001 &1836649782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3581,6 +3585,14 @@ PrefabInstance:
     - target: {fileID: 2459401132016502365, guid: 98effeec6c23c6a4a9a47a99c4aa2f9b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009579053416004125, guid: 98effeec6c23c6a4a9a47a99c4aa2f9b, type: 3}
+      propertyPath: roamDist
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009579053416004125, guid: 98effeec6c23c6a4a9a47a99c4aa2f9b, type: 3}
+      propertyPath: roamPauseTime
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

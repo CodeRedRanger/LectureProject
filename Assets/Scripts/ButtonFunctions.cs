@@ -24,4 +24,11 @@ public class ButtonFunctions : MonoBehaviour
         #endif
     }
 
+    public void loadLevel(int lvl)
+    {
+        SceneManager.LoadScene(lvl);
+        gameManager.instance.stateUnpause(); //in case paused when changing level
+    }
+}
+
 }
