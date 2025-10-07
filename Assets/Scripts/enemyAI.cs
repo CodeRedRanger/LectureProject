@@ -30,11 +30,11 @@ public class enemyAI : MonoBehaviour, IDamage
     //Lecture 3
     float shootTimer;
 
-    //NEW
+    //NEW roam
     float roamTimer; 
 
     float angleToPlayer;
-    //new
+    //new for roam
     float stoppingDistOrig; 
 
     bool playerInRange;
@@ -43,7 +43,7 @@ public class enemyAI : MonoBehaviour, IDamage
     //can't do in game manager because specific to each enemy
     Vector3 playerDir;
 
-    //NEW
+    //NEW for roam
     Vector3 startingPos; 
 
 
@@ -64,7 +64,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer += Time.deltaTime;
 
-        //new
+        //new for roam
         if(agent.remainingDistance <= 0.01f) //if close to destination, start timer to roam again
         {
             roamTimer += Time.deltaTime; 
@@ -72,6 +72,7 @@ public class enemyAI : MonoBehaviour, IDamage
         //two roam conditions: player not in range, or player in range but can't see player
         if (playerInRange && canSeePlayer())
         {
+            //below here is new for roam
             checkRoam();
         }
         else if (!playerInRange)
@@ -105,7 +106,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     }
 
-    //new
+    //new for roam
     void checkRoam()
     {
         if (roamTimer > roamPauseTime && agent.remainingDistance < 0.01f)
@@ -114,7 +115,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    //new
+    //new for roam
     void roam()
     {
         roamTimer = 0;
@@ -158,7 +159,7 @@ bool canSeePlayer()
                 agent.SetDestination(gameManager.instance.player.transform.position);
 
                 //Lecture 3
-                //new
+                //new for roam
                 if (agent.remainingDistance <= agent.stoppingDistance) //stoppingDistOrig can be ued if you want to change stopping distance later
                 {
                     faceTarget();
@@ -169,13 +170,13 @@ bool canSeePlayer()
                 {
                     shoot();
                 }
-                //new
+                //new for roam
                 agent.stoppingDistance = stoppingDistOrig; //reset stopping distance in case it was changed during roaming
                 return true;
             }
 
         }
-        //new
+        //new for roam
         agent.stoppingDistance = 0; 
 
         return false;
