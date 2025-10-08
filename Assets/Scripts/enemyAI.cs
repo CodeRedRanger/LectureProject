@@ -126,9 +126,11 @@ public class enemyAI : MonoBehaviour, IDamage
         ranPos += startingPos; //attaches to starting pos
 
         NavMeshHit hit; //guarantees point is on navmesh
-        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1); //1 is area mask, 1 is default walkable area (a layer thing)
-        agent.SetDestination(hit.position);
 
+        if (NavMesh.SamplePosition(ranPos, out hit, roamDist, 1)) //1 is area mask, 1 is default walkable area (a layer thing)
+        {
+            agent.SetDestination(hit.position);
+        }
     }
 
     //Lecture 3
