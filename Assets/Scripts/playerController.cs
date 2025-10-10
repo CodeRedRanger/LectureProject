@@ -18,8 +18,12 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
+
     private Vector3 moveDir;
     Vector3 playerVel;
+    //pushback example, can call on damage and explosion script
+    public Vector3 pushBack;
+    [SerializeField] int pushBackTime; 
 
     int jumpCount;
     int HPOrig; 
@@ -47,10 +51,15 @@ public class playerController : MonoBehaviour, IDamage
 
         sprint(); 
     }
-
+    //pushback example
+    public void AppliedPushback(Vector3 direction)
+    {
+        pushBack = direction;
+    }
     void movement()
     {
-
+        //pushback example
+        pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime); 
         if(controller.isGrounded)
         {
             playerVel = Vector3.zero;
@@ -62,8 +71,9 @@ public class playerController : MonoBehaviour, IDamage
             playerVel.y -= gravity * Time.deltaTime;
         }
         
+        //pushback example
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
-        controller.Move(moveDir * speed * Time.deltaTime);
+        controller.Move((moveDir + pushBack) * speed * Time.deltaTime);
 
         jump();
         controller.Move(playerVel * Time.deltaTime); 
