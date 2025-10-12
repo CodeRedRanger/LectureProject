@@ -1,8 +1,11 @@
 using UnityEngine;
 //Lecture 3
 using System.Collections;
+//Lecture 5
+using System.Collections.Generic;
+using NUnit.Framework;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IPickup
 {
     [SerializeField] LayerMask ignoreLayer; 
     [SerializeField] CharacterController controller;
@@ -14,9 +17,15 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
 
+    //Lecture 5
+    [SerializeField] List<gunStats> gunList = new List<gunStats>(); 
+    [SerializeField] GameObject gunModel; 
+    
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+    int gunListPos; 
+
 
 
     private Vector3 moveDir;
@@ -47,8 +56,15 @@ public class playerController : MonoBehaviour, IDamage
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.yellow);
         shootTimer += Time.deltaTime;
 
-        movement();
-
+        //Lecture 5 if statement
+        if(!gameManager.instance.isPaused)
+        {
+            movement(); 
+        }
+        
+        //must be outside isPaused statement because other wise you could 
+        //hold down sprint, then pause, and unpause and sprit boost will remain
+        //because button up was not recognized. 
         sprint(); 
     }
     //pushback example
@@ -78,10 +94,15 @@ public class playerController : MonoBehaviour, IDamage
         jump();
         controller.Move(playerVel * Time.deltaTime); 
 
-        if(Input.GetButton("Fire1") && shootTimer >= shootRate)
+        //Lecture 5, added gunListcount, ammocurrent
+        if(Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
         {
             shoot();
         }
+
+        //Lecture 5
+        selectGun();
+        reload();
 
 
     }
@@ -113,6 +134,10 @@ public class playerController : MonoBehaviour, IDamage
     {
         shootTimer = 0;
 
+        //Lecture 5
+        gunList[gunListPos].ammoCur--; 
+        updatePlayerUI();
+
         RaycastHit hit; 
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
@@ -126,6 +151,16 @@ public class playerController : MonoBehaviour, IDamage
 
             //Debug.Log(hit.collider.name); 
 
+        }
+    }
+
+    //Lecture 5
+    void reload()
+    {
+        if (Input.GetButtonDown("Reload"))
+        {
+            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+            updatePlayerUI(); 
         }
     }
 
@@ -147,6 +182,12 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+        //Lecture 5
+        if (gunList.Count > 0)
+        {
+            gameManager.instance.ammoCur.text = gunList[gunListPos].ammoCur.ToString("F0");
+            gameManager.instance.ammoMax.text = gunList[gunListPos].ammoMax.ToString("F0");
+        }
     }
 
     IEnumerator flashDamage()
@@ -155,4 +196,45 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         gameManager.instance.playerDamageFlash.SetActive(false);
     }
+
+    //Lecture 5
+    public void getGunStats(gunStats gun)
+    {
+        gunList.Add(gun);
+        gunListPos = gunList.Count - 1;
+
+
+        changeGun(); 
+
+        
+    }
+
+    void selectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count -1)
+        {
+            gunListPos++;
+            changeGun(); 
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0 )
+        {
+            gunListPos--;
+            changeGun();
+        }
+
+
+    }
+
+    void changeGun()
+    {
+        shootDamage = gunList[gunListPos].shootDamage;
+        shootDist = gunList[gunListPos].shootDist;
+        shootRate = gunList[gunListPos].shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        updatePlayerUI();
+    }
+
+
 }

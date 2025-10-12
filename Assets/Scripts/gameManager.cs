@@ -31,7 +31,10 @@ public class gameManager : MonoBehaviour
     //input won't work and enemies won't move when timeScale is 0
     float timeScaleOrig;
 
-    int gameGoalCount; 
+    int gameGoalCount;
+
+    //Lecture 5
+    public TMP_Text ammoCur, ammoMax; 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

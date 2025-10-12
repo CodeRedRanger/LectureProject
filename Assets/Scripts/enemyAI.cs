@@ -70,7 +70,7 @@ public class enemyAI : MonoBehaviour, IDamage
             roamTimer += Time.deltaTime; 
         }
         //two roam conditions: player not in range, or player in range but can't see player
-        if (playerInRange && canSeePlayer())
+        if (playerInRange && !canSeePlayer()) //changed from canSeePlayer()
         {
             //below here is new for roam
             checkRoam();
@@ -127,6 +127,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
         NavMeshHit hit; //guarantees point is on navmesh
 
+        //he doesn't use if, just NM sample and setdestination under it
         if (NavMesh.SamplePosition(ranPos, out hit, roamDist, 1)) //1 is area mask, 1 is default walkable area (a layer thing)
         {
             agent.SetDestination(hit.position);
@@ -201,7 +202,7 @@ private void OnTriggerExit(Collider other)
     if (other.CompareTag("Player"))
     {
         playerInRange = false;
-        //new
+        //new for roam
         agent.stoppingDistance = 0; 
     }
 }
