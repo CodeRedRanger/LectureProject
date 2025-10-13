@@ -8,6 +8,9 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
 
+    //Lecture 6
+    [SerializeField] Animator anim; 
+
     [SerializeField] int HP;
     //Lecture 3
     [SerializeField] int faceTargetSpeed;
@@ -64,6 +67,9 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         shootTimer += Time.deltaTime;
 
+        //Lecture 6
+        setAnimLocomotion(); 
+
         //new for roam
         if(agent.remainingDistance <= 0.01f) //if close to destination, start timer to roam again
         {
@@ -104,6 +110,12 @@ public class enemyAI : MonoBehaviour, IDamage
             }
         }*/
 
+    }
+
+    //Lecture 6
+    void setAnimLocomotion()
+    {
+        anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
     }
 
     //new for roam
