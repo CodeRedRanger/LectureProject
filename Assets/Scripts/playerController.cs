@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 //Lecture 5
 using System.Collections.Generic;
-using NUnit.Framework;
+
 
 public class playerController : MonoBehaviour, IDamage, IPickup
 {

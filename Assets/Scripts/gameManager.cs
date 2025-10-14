@@ -18,7 +18,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text gameGoalCountText; 
 
     //Lecture 3
-    public Image playerHPBar;
+    public Image playerHPBar; //can have public getter and setter
     public GameObject playerDamageFlash; 
 
     public GameObject player; //reference to player object
