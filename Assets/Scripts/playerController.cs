@@ -39,7 +39,12 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     float shootTimer; 
 
-    bool isSprinting; 
+    bool isSprinting;
+
+    //Lecture 7
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] audJump;
+    [Range(0,1)][SerializeField] float audJumpVol;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -126,6 +131,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     {
         if(Input.GetButtonDown("Jump") && jumpCount < jumpCountMax)
         {
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
             playerVel.y = jumpSpeed;
             jumpCount++; 
         }
