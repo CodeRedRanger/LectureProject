@@ -29,6 +29,15 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene(lvl);
         gameManager.instance.stateUnpause(); //in case paused when changing level
     }
+
+    //Lecture 6
+    public void respawn()
+    {
+        gameManager.instance.playerScript.spawnPlayer(); 
+        gameManager.instance.stateUnpause();
+    }
+
+
 }
 
 

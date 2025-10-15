@@ -9,7 +9,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
 
     //Lecture 6
-    [SerializeField] Animator anim; 
+    [SerializeField] Animator anim;
+    [SerializeField] int animTransSpeed; 
 
     [SerializeField] int HP;
     //Lecture 3
@@ -115,7 +116,14 @@ public class enemyAI : MonoBehaviour, IDamage
     //Lecture 6
     void setAnimLocomotion()
     {
-        anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
+        float agentSpeedCur = agent.velocity.normalized.magnitude;
+        float animSpeedCur = anim.GetFloat("Speed");
+        //currently at, where you want to be, how quickly (a,b,c): 1 is slow, 10 quicker
+        //lerp is a parabola, move toward give constant velocity
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCur, agentSpeedCur, Time.deltaTime * animTransSpeed));
+
+        //below works but not as smooth as above
+        //anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
     }
 
     //new for roam
@@ -222,9 +230,20 @@ private void OnTriggerExit(Collider other)
 void shoot ()
     {
         shootTimer = 0;
+
+        //Lecture 6
+        //occurs then resets trigger
+        //trigger: shoot, jump, react to damage; bool: crouch, dead state
+        anim.SetTrigger("Shoot");
+
         //create object at runtime/in real time
         Instantiate(bullet, shootPos.position, transform.rotation);
 
+    }
+
+    public void createBullet()
+    {
+        Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
     public void takeDamage(int amount)

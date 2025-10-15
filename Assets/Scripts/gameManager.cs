@@ -34,7 +34,10 @@ public class gameManager : MonoBehaviour
     int gameGoalCount;
 
     //Lecture 5
-    public TMP_Text ammoCur, ammoMax; 
+    public TMP_Text ammoCur, ammoMax;
+
+    //Lecture 6
+    public GameObject playerSpawnPos; 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -46,6 +49,9 @@ public class gameManager : MonoBehaviour
         //need this line before next
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+
+        //Lecture 6
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos"); 
     }
 
     // Update is called once per frame

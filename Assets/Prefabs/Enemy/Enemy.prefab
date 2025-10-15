@@ -52,6 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemyAI
   model: {fileID: 8045942599373616662}
   agent: {fileID: 2325146484152063315}
+  anim: {fileID: 4626417039111288320}
+  animTransSpeed: 8
   HP: 3
   faceTargetSpeed: 8
   shootPos: {fileID: 4736903806636875481}
@@ -59,6 +61,8 @@ MonoBehaviour:
   shootRate: 1
   FOV: 90
   headPos: {fileID: 4069044330373497258}
+  roamDist: 100
+  roamPauseTime: 0
 --- !u!195 &2325146484152063315
 NavMeshAgent:
   m_ObjectHideFlags: 0

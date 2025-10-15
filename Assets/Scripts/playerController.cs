@@ -47,7 +47,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         HPOrig = HP;
 
         //Lecture 3
-        updatePlayerUI();
+        //updatePlayerUI(); //Take out because spawnPlayer calls
+        spawnPlayer();
     }
 
     // Update is called once per frame
@@ -237,6 +238,14 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
         updatePlayerUI();
+    }
+
+    public void spawnPlayer()
+    {
+       controller.transform.position = gameManager.instance.playerSpawnPos.transform.position;
+
+        HP = HPOrig;
+        updatePlayerUI(); 
     }
 
 
