@@ -42,9 +42,15 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     bool isSprinting;
 
     //Lecture 7
+    bool isPlayingSteps; 
     [SerializeField] AudioSource aud;
     [SerializeField] AudioClip[] audJump;
     [Range(0,1)][SerializeField] float audJumpVol;
+    [SerializeField] AudioClip[] audHurt;
+    [Range(0, 1)][SerializeField] float audHurtVol;
+    [SerializeField] AudioClip[] audSteps;
+    [Range(0, 1)][SerializeField] float audStepsVol;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -84,6 +90,13 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime); 
         if(controller.isGrounded)
         {
+
+            //Lecture 7
+            if (moveDir.normalized.magnitude > 0.3f && !isPlayingSteps)
+            {
+                StartCoroutine(playStep()); 
+            }
+
             playerVel = Vector3.zero;
             jumpCount = 0; 
         }
@@ -131,7 +144,9 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     {
         if(Input.GetButtonDown("Jump") && jumpCount < jumpCountMax)
         {
+            //Lecture 7
             aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
+            
             playerVel.y = jumpSpeed;
             jumpCount++; 
         }
@@ -144,6 +159,9 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         //Lecture 5
         gunList[gunListPos].ammoCur--; 
         updatePlayerUI();
+
+        //Lecture 7
+        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVol);
 
         RaycastHit hit; 
 
@@ -177,6 +195,12 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        //Lecture 7
+        aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audJumpVol);
+
+
+
         //Lecture 3
         updatePlayerUI();
         StartCoroutine(flashDamage());
@@ -254,5 +278,20 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         updatePlayerUI(); 
     }
 
+    //Lecture 7
+    IEnumerator playStep()
+    {
+        isPlayingSteps = true;
+        aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)], audStepsVol);
+        if (isSprinting)
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f); 
+        }
+        isPlayingSteps = false; 
+     }
 
 }
