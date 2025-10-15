@@ -37,7 +37,8 @@ public class gameManager : MonoBehaviour
     public TMP_Text ammoCur, ammoMax;
 
     //Lecture 6
-    public GameObject playerSpawnPos; 
+    public GameObject playerSpawnPos;
+    public GameObject checkpointPopup; 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

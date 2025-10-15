@@ -56,7 +56,8 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrig = model.material.color;
-        gameManager.instance.updateGameGoal(1); //1 more enemy to kill for win condition    
+        //Lecture 6
+        //gameManager.instance.updateGameGoal(1); //1 more enemy to kill for win condition    
         //new
         stoppingDistOrig = agent.stoppingDistance;
         //new
