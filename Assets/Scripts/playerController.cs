@@ -131,12 +131,16 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         if(Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
+            //Lecture 7
+            isSprinting = true; 
 
         }
 
         else if(Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;  
+            //Lecture 7
+            isSprinting = false;
         }
     }
 
