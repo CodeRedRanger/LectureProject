@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class spawner : MonoBehaviour
 {
-    [SerializeField] GameObject objectToSpawn;
-    [SerializeField] int numToSpawn;
+    [SerializeField] GameObject objectToSpawn; //enemy
+    [SerializeField] int numToSpawn; //maxEnemies
     [SerializeField] int spawnRate;
     [SerializeField] Transform[] spawnPos;
 
     float spawnTimer;
-    int spawnCount;
+    int spawnCount; //enemyCount
     bool startSpawning; 
     void Start()
     {

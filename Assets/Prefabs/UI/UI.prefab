@@ -3628,7 +3628,7 @@ MonoBehaviour:
   ammoCur: {fileID: 2627713529258269405}
   ammoMax: {fileID: 3123839745839398646}
   playerSpawnPos: {fileID: 0}
-  checkpointPopup: {fileID: 0}
+  checkpointPopup: {fileID: 3859780280487818065}
 --- !u!1 &7929287089911625183
 GameObject:
   m_ObjectHideFlags: 0
