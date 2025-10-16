@@ -59,6 +59,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         //Lecture 3
         //updatePlayerUI(); //Take out because spawnPlayer calls
+        //Lecture 6
         spawnPlayer();
     }
 
@@ -199,6 +200,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public void takeDamage(int amount)
     {
         HP -= amount;
+        //added because not called
+        //AppliedPushback(pushBack); 
 
         //Lecture 7
         aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audJumpVol);
@@ -274,6 +277,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         updatePlayerUI();
     }
 
+    //Lecture 6
     public void spawnPlayer()
     {
        controller.transform.position = gameManager.instance.playerSpawnPos.transform.position;

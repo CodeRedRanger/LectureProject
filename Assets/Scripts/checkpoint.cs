@@ -1,3 +1,4 @@
+//Lecture 6
 using UnityEngine;
 using System.Collections; 
 
